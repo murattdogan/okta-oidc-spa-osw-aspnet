@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25123.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SinglePageWebApp", "SinglePageWebApp\SinglePageWebApp.csproj", "{18369BC5-81B0-4F65-94C4-28CC2E05BD86}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi", "WebApi\WebApi.csproj", "{4E62125A-B5CF-4C50-BEA7-901B8862533A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Licenses", "Licenses", "{05F45F90-C934-4A6B-8FAF-55E61504516A}"
+	ProjectSection(SolutionItems) = preProject
+		LICENSE = LICENSE
+		THIRD_PARTY_NOTICES = THIRD_PARTY_NOTICES
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{18369BC5-81B0-4F65-94C4-28CC2E05BD86}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18369BC5-81B0-4F65-94C4-28CC2E05BD86}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18369BC5-81B0-4F65-94C4-28CC2E05BD86}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18369BC5-81B0-4F65-94C4-28CC2E05BD86}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E62125A-B5CF-4C50-BEA7-901B8862533A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E62125A-B5CF-4C50-BEA7-901B8862533A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E62125A-B5CF-4C50-BEA7-901B8862533A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E62125A-B5CF-4C50-BEA7-901B8862533A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

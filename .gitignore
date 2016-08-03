@@ -1,0 +1,16 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/packages
+/SinglePageWebApp/bin
+/SinglePageWebApp/obj
+/WebApi/bin
+/WebApi/obj
+/SinglePageWebApp/web.config
+/SinglePageWebApp/Web.dev.Debug.config
+/WebApi/web.config
+/WebApi/web.dev.debug.config
+/.vs/config/applicationhost.config
+/SinglePageWebApp/js/okta-auth-js-1.0.2.js
+/SinglePageWebApp/js/sign-in-widget.1.3.3.js
