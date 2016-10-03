@@ -34,7 +34,6 @@ namespace Okta.Samples.OpenIDConnect.AspNet.Api.Controllers
         [OktaGroupAuthorize( Policy = GroupPolicy.Any)]
         [HttpGet]
         [Route("protected")]
-
         public IHttpActionResult Secured()
         {
             string login = string.Empty;
