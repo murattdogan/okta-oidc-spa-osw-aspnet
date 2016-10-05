@@ -42,7 +42,8 @@ namespace Okta.Samples.OpenIDConnect.AspNet.Api.Controllers
                 ClaimsPrincipal principal = Thread.CurrentPrincipal as ClaimsPrincipal;// HttpContext.Current.User as ClaimsPrincipal;
                 login = principal.Claims.Where(c => c.Type == "preferred_username").First().Value;
             }
-            return this.Ok(string.Format("All good. You only get this message if you are authenticated (as {0}) AND you belong to either the Marketing or Finance group(s) in your Okta org.", login));
+            string strMembershipGroups = System.Configuration.ConfigurationManager.AppSettings["okta:RequiredGroupMemberships"];
+            return this.Ok(string.Format("All good. You only get this message if you are authenticated (as {0}) AND you belong to one of the following group(s) in your Okta organization: {1}.", login, strMembershipGroups));
         }
     }
 }

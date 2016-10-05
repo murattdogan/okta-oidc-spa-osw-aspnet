@@ -37,7 +37,7 @@ namespace Okta.Samples.OpenIDConnect.AspNet.Api.Controllers
                     string strGroups = System.Web.Configuration.WebConfigurationManager.AppSettings["okta:RequiredGroupMemberships"];
                     if (!string.IsNullOrEmpty(strGroups))
                     {
-                        List<string> lstGroupNames = strGroups.Split(',').ToList<string>();
+                        List<string> lstGroupNames = strGroups.Replace(" ", string.Empty).Split(',').ToList<string>();
                         ClaimsPrincipal principal = Thread.CurrentPrincipal as ClaimsPrincipal;// HttpContext.Current.User as ClaimsPrincipal;
                         IEnumerable<Claim> groupsClaimEnum = principal.Claims.Where(c => c.Type == "groups");
                         List<Claim> groupsClaim = null;
@@ -53,7 +53,9 @@ namespace Okta.Samples.OpenIDConnect.AspNet.Api.Controllers
                                 int iFoundGroups = 0;
                                 foreach (string strGoupName in lstGroupNames)
                                 {
-                                    if (groupsClaim.Find(g => g.Value == strGoupName) != null)
+                                    Claim groupClaim = groupsClaim.Find(g => g.Value == strGoupName);
+
+                                    if (groupClaim != null)
                                     {
                                         ++iFoundGroups;
                                     }

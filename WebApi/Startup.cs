@@ -26,11 +26,6 @@ namespace Okta.Samples.OpenIDConnect.AspNet.Api
     {
         public void Configuration(IAppBuilder app)
         {
-            app.Use((context, next) =>
-            {
-                PrintCurrentIntegratedPipelineStage(context, "Middleware 1");
-                return next.Invoke();
-            });
 
             var clientID = WebConfigurationManager.AppSettings["okta:ClientId"];
             var oauthIssuer = WebConfigurationManager.AppSettings["okta:OAuth_Issuer"];
@@ -52,6 +47,12 @@ namespace Okta.Samples.OpenIDConnect.AspNet.Api
                 ValidateIssuer = true
             };
 
+            app.UseOAuthBearerAuthentication(new OAuthBearerAuthenticationOptions
+            {
+                AccessTokenFormat = new JwtFormat(tvps,
+                new OpenIdConnectCachingSecurityTokenProvider(oidcIssuer + "/.well-known/openid-configuration")),
+            });
+
             //app.UseJwtBearerAuthentication(new JwtBearerAuthenticationOptions
             //{
             //    TokenValidationParameters = tvps,
@@ -60,33 +61,6 @@ namespace Okta.Samples.OpenIDConnect.AspNet.Api
             //        new OpenIdConnectCachingSecurityTokenProvider(oidcIssuer + "/.well-known/openid-configuration")
             //    }
             //});
-
-            app.UseOAuthBearerAuthentication(new OAuthBearerAuthenticationOptions
-            {
-                AccessTokenFormat = new JwtFormat(tvps,
-                new OpenIdConnectCachingSecurityTokenProvider(oidcIssuer + "/.well-known/openid-configuration")),
-            });
-
-
-            //app.Use((context, next) =>
-            //{
-            //    PrintCurrentIntegratedPipelineStage(context, "2nd MW");
-            //    return next.Invoke();
-            //});
-            //app.Run(context =>
-            //{
-            //    PrintCurrentIntegratedPipelineStage(context, "3rd MW");
-            //    return context.Response.WriteAsync("Hello world");
-            //});
-
-        }
-
-        private void PrintCurrentIntegratedPipelineStage(IOwinContext context, string msg)
-        {
-            var currentIntegratedpipelineStage = System.Web.HttpContext.Current.CurrentNotification;
-            context.Get<System.IO.TextWriter>("host.TraceOutput").WriteLine(
-                "Current IIS event: " + currentIntegratedpipelineStage
-                + " Msg: " + msg);
         }
     }
 
