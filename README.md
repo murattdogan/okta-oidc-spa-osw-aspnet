@@ -3,8 +3,8 @@ This code sample demonstrates how to use Okta's OpenID Connect implementation wi
 
 ##Solution architecture
 The Visual Studio solution is made of 2 projects:  
-- **SinglePageWebApp** is a single page web application where most (if not all) of the action occurs in the Views/Home/Index.cshtml page (along with the Scripts/single-page.js JavaScript file)  
-- **WebApi** is an ASP.NET Web API project that exposes 2 endpoints:  **/unprotected** and **/protected**. The **/unprotected** endpoint can be called by anonymous or non-authorized users, but the **/protected** endpoint can only be accessed by authenticated users who are members of pre-configured Okta groups.
+- **SinglePageWebApp** is a single page web application where most (if not all) of the action occurs in the Views/Home/Index.cshtml page (along with the Scripts/single-page.js JavaScript file). This project is the __Client__ in OAuth2 lingo.
+- **WebApi** is an ASP.NET Web API project that exposes 2 endpoints:  **/unprotected** and **/protected**. The **/unprotected** endpoint can be called by anonymous or non-authorized users, but the **/protected** endpoint can only be accessed by authenticated users who are members of pre-configured Okta groups. This project is the __Resource Server__ in OAuth2 lingo.
 
 
 ##Pre-requisites
@@ -31,5 +31,12 @@ You can also duplicate that file and create a new **web.dev.debug.config** file 
 14. In the **web.dev.release.config** of the `WebApi` project, update the following parameters:  
   - `okta:OIDC_Issuer`: this parameter must match the url of your Okta organization (such as _https://company.oktapreview.com_), because the issuer claim of Okta's OpenID Connect ID tokens has an issuer value that is the url of the Okta organization
 - `okta:RequiredGroupMemberships`: this parameter should include the names of the possible group(s) your test users are assigned to (comma-separated list). The `OktaGroupMembershipAttribute` custom class in the `WebApi` project will validate a user if he belongs to any of these groups (not all of them).
-10. You should be good to go and ready to test your SPA/ASP.NET Web API application!
-12. If you want to look more closely at the code, you should check the Views/Home/Register.cshtml page as well the Scrips/single-page.js script file in the  **SinglePageWebApp** project.
+10. Rebuild the whole solution (in _Release_ mode if you used _web.dev.release.config_, in _Debug_ mode if you used _web.dev.debug.config_),  to push your configuration changes into the projects' web.config files.
+12. If you want to look more closely at the code, you should check the following files  in the  **SinglePageWebApp** project:
+  - `Views/Home/Register.cshtml` page 
+  - `Scripts/single-page.js` file   
+
+ and in the __WebApi__ project:
+  - `Startup.cs` to understand how the resource server plugs the OWIN Oauth Bearer Authentication middleware into the authentication pipeline
+  - `ValuesController.cs` to understand how the resource server processes the requests to `/unprotected` and `/protected`
+  - `OktaGroupMembershipAttribute.cs` to understand how the resource server checks the `groups` claim included in the ID token to perform authorization on the `/protected` endpoint.

@@ -125,12 +125,25 @@ namespace Okta.Samples.OpenIDConnect.AspNet.Api.Controllers
             {
                 if (owinContext.Authentication.User != null)
                 {
-                    actionContext.Response = new AuthenticationFailureMessage("unauthorized", actionContext.Request,
+                    if (owinContext.Authentication.User.Claims.Count() != 0)
+                    {
+                        actionContext.Response = new AuthenticationFailureMessage("unauthorized", actionContext.Request,
+                            new
+                            {
+                                error = "validation_error",
+                                error_message = string.Format("The user could be found in the JWT claims (userid: {0}) but the JWT itself is invalid, most likely because it doesn't contain the proper groups claim value.", owinContext.Authentication.User.Claims.ElementAt(4))
+                            });
+                    }
+                    else //the user has no claim so it looks like the JWT token couldn't be validated at all
+                    {
+                        actionContext.Response = new AuthenticationFailureMessage("unauthorized", actionContext.Request,
                         new
                         {
                             error = "validation_error",
-                            error_message = string.Format("The user could be found in the JWT claims (userid: {0}) but the JWT itself is invalid, most likely because it doesn't contain the proper groups claim value.", owinContext.Authentication.User.Claims.ElementAt(4))
+                            error_message = string.Format("The bearer token could not be validated, most likely  because the WebApi project's okta:OIDC_Issuer value in its web.config does not match the okta:TenantUrl value of the SinglePageWebApp project's web.config file.")
                         });
+
+                    }
                 }
 
                 else

@@ -107,10 +107,9 @@ function callSecureWebApi() {
         success: function (data) {
             $('#logged-in-res').text(data);
         },
-        error: function (textStatus, errorThrown) {
-            console.log('error while calling secure web api: ' + errorThrown);
-            console.log(textStatus);
-            $('#logged-in-res').text("You must be logged in AND have the proper permissions to access this API endpoint");
+        error: function (res, errorThrown) {
+            console.log(res);
+            $('#logged-in-res').text("You must be logged in AND have the proper permissions to access this API endpoint. Error message: " + res.responseText);
         }
     });
 }
